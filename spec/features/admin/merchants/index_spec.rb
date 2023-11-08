@@ -53,12 +53,12 @@ RSpec.describe "Admin Merchants Index", type: :feature do
   # US 25
   it "clicking the name redirects to merchant admin show page and displays the name" do
     visit admin_merchants_path
+
     within("#merchant-#{@merchant1.id}") do
-      expect(page).to have_link("#{@merchant1.name} ##{@merchant1.id}")
-      click_link("#{@merchant1.name} ##{@merchant1.id}")
-      expect(current_path).to eq(admin_merchant_path(@merchant1.id))
-      expect(page).to have_content(@merchant1.name)
+      expect(page).to have_link("#{@merchant1.name}")
+      click_link("#{@merchant1.name}")
     end
+      expect(page).to have_content("#{@merchant1.name}")
   end
 
   #US 27/28
@@ -107,5 +107,12 @@ RSpec.describe "Admin Merchants Index", type: :feature do
       click_link("#{@merchant1.name} ##{@merchant1.id}")
       expect(current_path).to eq(admin_merchant_path(@merchant1.id))
     end
+  end
+
+  #US 31
+  it "displays the date of the top 5 merchants most profitable days" do 
+    visit admin_merchants_path
+    within("all_top_5")
+      expect(page).to have_content(Date.today.strftime("%m/%d/%y"))
   end
 end

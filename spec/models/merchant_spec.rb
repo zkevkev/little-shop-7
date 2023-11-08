@@ -145,5 +145,11 @@ RSpec.describe Merchant, type: :model do
         expect(Merchant.disabled_merchants).to eq(expected)
       end
     end
+
+    describe "best_day" do
+      it "returns a merchant's highest invoiced day" do
+        expect(@merchant.best_day.to_date).to eq(Date.today)
+      end
+    end
   end
 end
