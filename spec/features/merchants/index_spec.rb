@@ -38,7 +38,13 @@ RSpec.describe "merchant dashboard index page" do
 
   describe "index page" do
     it "shows all merchants and link to the merchant show" do
-      visit
+      visit "/merchants"
+
+      expect(page).to have_content(@merchant_1.name)
+
+      click_link("#{@merchant_1.name}")
+
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/dashboard")
     end
   end
 end
