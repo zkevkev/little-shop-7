@@ -21,14 +21,9 @@
 <section id="disabled-items">
   <h3>Disabled Items</h3>
   <% @merchant.disabled_items.each do |item| %>
-<<<<<<< HEAD
-    <section id="<%= item.id %>">
-      <%= link_to "#{item.name}", merchant_item_path(@merchant, item) %></br>        
-      <%= button_to "Enable Item", merchant_item_status_path(@merchant, item), method: :patch, params: { status: "enabled" }, data: { turbo: false }, local: true %></br>
     <section id="disabled-<%= item.id %>">
       <%= link_to "#{item.name}", merchant_item_path(@merchant, item) %></br>       
-      <%= button_to "Enable Item", merchant_item_status_path(@merchant, item), 
-      method: :patch, params: { status: "enabled" }, data: { turbo: false }, local: true %></br>
+      <%= button_to "Enable Item", merchant_item_status_path(@merchant, item), method: :patch, params: { status: "enabled" }, data: { turbo: false }, local: true %></br>
     </section>
   <% end %>
 </section>
