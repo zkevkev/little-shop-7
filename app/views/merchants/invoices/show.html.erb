@@ -10,11 +10,11 @@
   <p>Quantity sold: <%= item.quantity %></p>
   <p>Price sold: <%= number_to_currency(item.price_total) %>
   <p>Status: <% if item.shipping_status == 2 %>
-                <p>Shipped<P>
+                Shipped</P>
               <% elsif item.shipping_status == 1%>
-                <p>Packaged</p>
+                Packaged</p>
                 <% else %>
-                <p>Pending</p>
+                Pending</p>
              <% end %>
   <br>
 <%end%>
