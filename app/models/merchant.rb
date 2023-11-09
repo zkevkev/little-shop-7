@@ -50,7 +50,7 @@ class Merchant < ApplicationRecord
     items.joins(:invoices)
     .joins(:invoice_items)
     .where(items: {merchant_id: merchant_id})
-    .select("id", "name", "invoice_items.quantity as quantity", "unit_price", "invoice_items.status as shipping_status").uniq
+    .select("id", "name", "invoice_items.quantity as quantity", "unit_price", "invoice_items.status as shipping_status", "items.status as status").uniq
   end
   
   def self.enabled_merchants

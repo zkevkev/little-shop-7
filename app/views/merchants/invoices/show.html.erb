@@ -5,10 +5,21 @@
 <p>Date Created: <%= @invoice.date_format %></p>
 <p>Total revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
+<section id="item_status">
 <p>Items on the invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>
   <p>Name: <%= item.name %></p>
   <p>Quantity sold: <%= item.quantity %></p>
   <p>Price sold: <%= number_to_currency(item.price_total) %>
+  <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
+                 <% if item.status == "disabled" %>
+                  <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>
+                 <% elsif item.status == "enabled"%>
+                  <%= form.select :status, ["Enabled", "Disabled"], selected: "Enabled"%>
+                 <% end %>
+              <%= form.hidden_field :item_id, value: item.id%>
+              <%= form.submit "Update Item Status"%>
+              <% end %>
+</section>
   <p>Status: <% if item.shipping_status == 2 %>
                 Shipped</P>
               <% elsif item.shipping_status == 1%>

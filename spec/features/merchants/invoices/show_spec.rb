@@ -64,12 +64,26 @@ RSpec.describe "merchant invoice show page" do
       expect(page).to have_content(@invoice_1.status)
       expect(page).to_not have_content(@item_7.name)
     end
+
+    it "Shows total revenue generated for an invoice" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      expect(page).to have_content("Total revenue: $1,000.00")
+
+    end
   end
 
-  it "Shows total revenue generated for an invoice" do
-    visit merchant_invoice_path(@merchant_1, @invoice_1)
+  #US 18
+  describe "Merchant Invoice Show Page: Update Item Status" do
+    it "select field and update button" do
+      visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+      
+      
+      within("#item_status") do
+        click_button("Update Item Status")
+      end
 
-    expect(page).to have_content("Total revenue: $1,000.00")
-
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
+    end
   end
 end

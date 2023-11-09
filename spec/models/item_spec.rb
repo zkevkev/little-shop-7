@@ -43,6 +43,11 @@ RSpec.describe Item, type: :model do
     end
 
     describe "#price_total" do
+
+      it "gives the sum of the quantity and cost" do
+        expect(@item_1.price_total).to eq(500000)
+      end
+      
       it "gives the sum of the invoice items quantity and cost" do
         expect(@item_1.price_total).to eq(500_000)
       end
