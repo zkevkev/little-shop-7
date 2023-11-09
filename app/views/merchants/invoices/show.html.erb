@@ -10,7 +10,7 @@
   <p>Name: <%= item.name %></p>
   <p>Quantity sold: <%= item.quantity %></p>
   <p>Price sold: <%= number_to_currency(item.price_total) %>
-  <p>Status:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
+  <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
                  <% if item.status == "disabled" %>
                   <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>
                  <% elsif item.status == "enabled"%>
@@ -20,6 +20,13 @@
               <%= form.submit "Update Item Status"%>
               <% end %>
 </section>
+  <p>Status: <% if item.shipping_status == 2 %>
+                Shipped</P>
+              <% elsif item.shipping_status == 1%>
+                Packaged</p>
+                <% else %>
+                Pending</p>
+             <% end %>
   <br>
 <%end%>
 

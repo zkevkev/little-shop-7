@@ -24,13 +24,13 @@ RSpec.describe Merchant, type: :model do
     @customer_4 = create(:customer)
     @customer_5 = create(:customer)
     @customer_6 = create(:customer)
-    @invoice_1 = create(:invoice, customer: @customer_1)
-    @invoice_2 = create(:invoice, customer: @customer_2)
+    @invoice_1 = create(:invoice, customer: @customer_1, created_at: "2023-11-07 00:04:06.477179000 +0000")
+    @invoice_2 = create(:invoice, customer: @customer_2, created_at: "2020-10-02 00:04:06.477179000 +0000")
     @invoice_3 = create(:invoice, customer: @customer_3)
     @invoice_4 = create(:invoice, customer: @customer_4)
     @invoice_5 = create(:invoice, customer: @customer_5)
     @invoice_6 = create(:invoice, customer: @customer_6)
-    @item_1 = create(:item, merchant: @merchant, status: "enabled")
+    @item_1 = create(:item, merchant: @merchant, status: "enabled", unit_price: 10000000)
     @item_2 = create(:item, merchant: @merchant, status: "enabled")
     @item_3 = create(:item, merchant: @merchant, status: "enabled")
     @item_4 = create(:item, merchant: @merchant, status: "disabled")
@@ -148,7 +148,8 @@ RSpec.describe Merchant, type: :model do
 
     describe "best_day" do
       it "returns a merchant's highest invoiced day" do
-        expect(@merchant.best_day.to_date).to eq(Date.today)
+
+        expect(@merchant.best_day.strftime("%m/%d/%y")).to eq(@invoice_1.created_at.strftime("%m/%d/%y"))
       end
     end
   end

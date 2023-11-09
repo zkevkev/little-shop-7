@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Admin Invoices Index Page" do
   before :each do
     @customer = create(:customer)
-    @invoice1 = create(:invoice, customer: @customer)
+    @invoice1 = create(:invoice, customer: @customer, status: 0)
     
     # Create first item and associated invoice item
     @item1 = create(:item) 
@@ -22,7 +22,7 @@ RSpec.describe "Admin Invoices Index Page" do
     visit admin_invoice_path(@invoice1.id)
 
     expect(page).to have_content("ID: ##{@invoice1.id}")
-    expect(page).to have_select('invoice[status]', selected: @invoice1.status)
+    expect(page).to have_content("Status: #{@invoice1.status}")
     expect(page).to have_content("Customer: #{@invoice1.customer.full_name}")
     expect(page).to have_content("Created Date: #{@invoice1.date_format}")
   end
@@ -52,10 +52,13 @@ RSpec.describe "Admin Invoices Index Page" do
   it "displays a select field for invoice status and updates the field" do
     visit admin_invoice_path(@invoice1.id)
 
-    expect(page).to have_select('invoice[status]', selected: @invoice1.status)
+    expect(@invoice1.status).to eq("in progress")
 
-    select 'cancelled', from: 'invoice[status]'
+    select "completed", from: "status"
+    click_button "Update Invoice Status"
 
-    expect(page).to have_select('invoice[status]', selected: 'cancelled')
+    @invoice1.reload
+
+    expect(@invoice1.status).to eq("completed")
   end
 end 

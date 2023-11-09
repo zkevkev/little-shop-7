@@ -1,17 +1,21 @@
-<section class="invoice-details">
+<div id="invoice-details">
   <p><strong>ID:</strong> #<%= @invoice.id %></p>
-  <p><strong>Status:</strong> <%= select_tag 'invoice[status]', options_for_select(["in progress", "completed", "cancelled"], @invoice.status) %></p>
-  <%= button_to "Update Invoice Status", admin_invoice_path(@invoice), method: :patch, data: { turbo: false } %><br>
+
+  <%= form_with url: admin_invoice_path(@invoice, update: 'status'), method: :patch, data: {turbo: false} do |f| %>
+    <p>Status: <%= f.select :status, [["in progress", "0"], ["completed", "1"], ["cancelled", "2"], ["#{@invoice.status}", "current", { hidden: true }]], selected: "current" %></p>
+    <%= f.submit "Update Invoice Status" %>
+  <% end %>
+
   <p><strong>Customer:</strong> <%= @invoice.customer.full_name %></p>
   <p><strong>Created Date:</strong> <%= @invoice.date_format %></p>
   <p><strong>Total Revenue:</strong> $<%= @invoice.total_revenue %></p>
-</section>
+</div>
 
 <% @invoice.invoice_items.each do |invoice_item| %>
   <section id="invoice-item-<%= invoice_item.id %>"></p>
     <p>Item: <%= invoice_item.item.name %></p>
     <p>Quantity Ordered: <%= invoice_item.quantity %></p>
-    <p>Sold Price: <%= invoice_item.unit_price %></p>
+    <p>Sold Price: <%= (invoice_item.unit_price) %></p>
     <p>Invoice Item Status: <%= invoice_item.status %></p>
   </section>
 <% end %>
