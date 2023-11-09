@@ -14,8 +14,8 @@ RSpec.describe "Admin Merchants Index", type: :feature do
     @customer4 = create(:customer)
     @customer5 = create(:customer)
 
-    @invoice1 = create(:invoice, customer: @customer1)
-    @invoice2 = create(:invoice, customer: @customer2)
+    @invoice1 = create(:invoice, customer: @customer1, created_at: "2023-11-07 00:04:06.477179000 +0000")
+    @invoice2 = create(:invoice, customer: @customer2, created_at: "2020-10-02 00:04:06.477179000 +0000")
     @invoice3 = create(:invoice, customer: @customer3)
     @invoice4 = create(:invoice, customer: @customer4)
     @invoice5 = create(:invoice, customer: @customer5)
@@ -113,6 +113,6 @@ RSpec.describe "Admin Merchants Index", type: :feature do
   it "displays the date of the top 5 merchants most profitable days" do 
     visit admin_merchants_path
     within("all_top_5")
-      expect(page).to have_content(Date.today.strftime("%m/%d/%y"))
+      expect(page).to have_content(@invoice1.created_at.strftime("%m/%d/%y"))
   end
 end
