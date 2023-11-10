@@ -56,7 +56,7 @@ RSpec.describe "merchant discounts index page" do
   it "delete button next to each discount deletes and routes back" do
     visit merchant_discounts_path(@merchant_1)
 
-    within("#delete-#{@discount_1}") do
+    within("#delete-#{@discount_1.id}") do
       expect(page).to have_button("Delete")
       click_button "Delete"
     end
