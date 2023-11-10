@@ -32,6 +32,15 @@ class Merchants::DiscountsController < ApplicationController
     redirect_to merchant_discounts_path(merchant)
   end
 
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    
+  end
+
   private
   
   def discount_params

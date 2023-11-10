@@ -17,7 +17,7 @@ RSpec.describe "merchant discount edit page" do
   it "with valid data, updates the discount and redirects to merchant discount show page" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
 
-    within("#update-discount") do
+    within("#update-discount-form") do
       fill_in :percentage_discount, with: 100
       fill_in :quantity_threshold, with: 1_000
       click_button "Update Discount"
@@ -31,8 +31,8 @@ RSpec.describe "merchant discount edit page" do
   it "with invalid data, fashes an error and redirects back" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
 
-    within("#update-discount") do
-      fill_in :percentage_discount, with: 
+    within("#update-discount-form") do
+      fill_in :percentage_discount, with: ""
       fill_in :quantity_threshold, with: 1_000
       click_button "Update Discount"
     end
