@@ -15,3 +15,5 @@
 <% @top_customers.each_with_index do |customer, index| %>
   <%= "#{index + 1}. #{customer.full_name} - #{@merchant.top_five_customers_count[customer.id]} purchases" %></br>
 <% end %>
+
+<%= link_to "View My Discounts", merchant_discounts_path(@merchant) %>
