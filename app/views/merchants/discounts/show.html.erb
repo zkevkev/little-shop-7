@@ -1,4 +1,13 @@
-<%= @merchant.name %>
-<%= @discount.id %>
-<%= @discount.percentage_discount %>
-<%= @discount.quantity_threshold %>
+<strong><%= @merchant.name %></strong>
+
+<section id="id">
+  <%= @discount.id %>
+</section>
+
+<section id="percentage_discount">
+  <%= @discount.percentage_discount %>
+</section>
+
+<section id="quantity_threshold">
+  <%= @discount.quantity_threshold %>
+</section>

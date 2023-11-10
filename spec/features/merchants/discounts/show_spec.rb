@@ -11,10 +11,15 @@ RSpec.describe "merchant discount show page" do
     visit merchant_discount_path(@merchant_1, @discount_1)
     
     expect(page).to have_content(@merchant_1.name)
-    expect(page).to have_content(@discount_1.id)
-    expect(page).to have_content(@discount_1.percentage_discount)
-    expect(page).to have_content(@discount_1.quantity_threshold)
-
+    within("#id") do
+      expect(page).to have_content(@discount_1.id)
+    end
+    within("#percentage_discount") do
+      expect(page).to have_content(@discount_1.percentage_discount)
+    end
+    within("#quantity_threshold") do
+      expect(page).to have_content(@discount_1.quantity_threshold)
+    end
     expect(page).to_not have_content(@discount_2.id)
     expect(page).to_not have_content(@discount_2.percentage_discount)
     expect(page).to_not have_content(@discount_2.quantity_threshold)

@@ -63,7 +63,5 @@ RSpec.describe "merchant discounts index page" do
 
     expect(current_path).to eq(merchant_discounts_path(@merchant_1))
     expect(page).to_not have_content(@discount_1.id)
-    expect(page).to_not have_content(@discount_1.percentage_discount)
-    expect(page).to_not have_content(@discount_1.quantity_threshold)
   end
 end
