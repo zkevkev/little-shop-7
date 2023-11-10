@@ -7,7 +7,7 @@ RSpec.describe "merchant discount show page" do
     @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 0.3, quantity_threshold: 15)
   end
 
-  it "shows all information for a discount and not other discounts" do
+  it "shows all information for the discount" do
     visit merchant_discount_path(@merchant_1, @discount_1)
     
     expect(page).to have_content(@merchant_1.name)
@@ -20,6 +20,11 @@ RSpec.describe "merchant discount show page" do
     within("#quantity_threshold") do
       expect(page).to have_content(@discount_1.quantity_threshold)
     end
+  end
+
+  it "does not show information from other discounts" do
+    visit merchant_discount_path(@merchant_1, @discount_1)
+    
     expect(page).to_not have_content(@discount_2.id)
     expect(page).to_not have_content(@discount_2.percentage_discount)
     expect(page).to_not have_content(@discount_2.quantity_threshold)
