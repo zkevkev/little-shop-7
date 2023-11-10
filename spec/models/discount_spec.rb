@@ -16,10 +16,5 @@ RSpec.describe Discount, type: :model do
   end
 
   describe "instance methods" do
-    describe "#format_percent" do
-      it "returns the formatted percentage for a discount" do
-        expect(@discount_1.format_percent).to eq("20%")
-      end
-    end
   end
 end

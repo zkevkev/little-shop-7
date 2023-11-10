@@ -5,7 +5,7 @@
 </section>
 
 <section id="percentage_discount">
-  <p>Percentage Discount: <%= @discount.percentage_discount %></p>
+  <p>Percentage Discount: <%= number_to_percentage(@discount.percentage_discount, precision: 0) %></p>
 </section>
 
 <section id="quantity_threshold">

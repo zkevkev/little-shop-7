@@ -4,10 +4,10 @@ RSpec.describe "merchant discounts index page" do
   before :each do
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
-    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 0.2, quantity_threshold: 10)
-    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 0.3, quantity_threshold: 15)
-    @discount_3 = create(:discount, merchant: @merchant_1, percentage_discount: 0.4, quantity_threshold: 20)
-    @discount_4 = create(:discount, merchant: @merchant_2, percentage_discount: 0.7, quantity_threshold: 50)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 20, quantity_threshold: 10)
+    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 30, quantity_threshold: 15)
+    @discount_3 = create(:discount, merchant: @merchant_1, percentage_discount: 40, quantity_threshold: 20)
+    @discount_4 = create(:discount, merchant: @merchant_2, percentage_discount: 70, quantity_threshold: 50)
   end
 
   it "shows all this merchant's discounts and their details" do

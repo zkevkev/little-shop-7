@@ -3,8 +3,8 @@ require "rails_helper"
 RSpec.describe "merchant discount show page" do
   before :each do
     @merchant_1 = create(:merchant)
-    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 0.2, quantity_threshold: 10)
-    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 0.3, quantity_threshold: 15)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 20, quantity_threshold: 10)
+    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 30, quantity_threshold: 15)
   end
 
   it "shows all information for the discount" do

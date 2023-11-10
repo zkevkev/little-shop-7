@@ -18,12 +18,12 @@ RSpec.describe "new merchant discount page" do
   it "when filled out with valid data, it creates a new discount and redirects to index" do
     visit new_merchant_discount_path(@merchant_1)
 
-    fill_in :percentage_discount, with: "0.5"
+    fill_in :percentage_discount, with: "50"
     fill_in :quantity_threshold, with: "30"
     click_button "Create Discount"
 
     expect(current_path).to eq(merchant_discounts_path(@merchant_1))
-    expect(page).to have_content("0.5")
+    expect(page).to have_content("50")
     expect(page).to have_content("30")
   end
 
