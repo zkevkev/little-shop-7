@@ -52,4 +52,18 @@ RSpec.describe "merchant discounts index page" do
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
   end
+
+  it "delete button next to each discount deletes and routes back" do
+    visit merchant_discounts_path(@merchant_1)
+
+    within("#delete-#{@discount_1}") do
+      expect(page).to have_button("Delete")
+      click_button "Delete"
+    end
+
+    expect(current_path).to eq(merchant_discounts_path(@merchant_1))
+    expect(page).to_not have_content(@discount_1.id)
+    expect(page).to_not have_content(@discount_1.percentage_discount)
+    expect(page).to_not have_content(@discount_1.quantity_threshold)
+  end
 end
