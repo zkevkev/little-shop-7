@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
     
     resources :invoices, controller: "merchants/invoices", only: [:show, :index, :update]
+
+    resources :discounts, controller: "merchants/discounts", only: [:index]
   end
 
   namespace :merchants do

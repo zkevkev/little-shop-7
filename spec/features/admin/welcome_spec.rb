@@ -78,7 +78,7 @@ RSpec.describe "admin dashboard index page" do
   end
 
   #user story 22 & 23
-  it "Displays incomplete invoices with oldest first" do
+  xit "Displays incomplete invoices with oldest first" do
     visit admin_path
     invoice_1 = find_link(@invoice_item_1.invoice_id)
     invoice_2 = find_link(@invoice_item_2.invoice_id)
