@@ -34,6 +34,9 @@ RSpec.describe "merchant dashboard index page" do
     @transaction_4 = create_list(:transaction, 2, invoice: @invoice_4, result: 0)
     @transaction_5 = create_list(:transaction, 1, invoice: @invoice_5, result: 0)
     @transaction_6 = create(:transaction, invoice: @invoice_6, result: 1)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 0.2, quantity_threshold: 10)
+    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 0.3, quantity_threshold: 15)
+    @discount_3 = create(:discount, merchant: @merchant_1, percentage_discount: 0.4, quantity_threshold: 20)
   end
 
   # US 1
@@ -41,6 +44,14 @@ RSpec.describe "merchant dashboard index page" do
     visit merchant_dashboard_path(@merchant_1)
 
     expect(page).to have_content(@merchant_1.name)
+  end
+
+  it "has a link to this merchant's discount index" do
+    visit merchant_dashboard_path(@merchant_1)
+
+    click_link("View My Discounts")
+
+    expect(current_path).to eq(merchant_discounts_path(@merchant_1))
   end
   
   describe "Merchant Dashboard Links" do
