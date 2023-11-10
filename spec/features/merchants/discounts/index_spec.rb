@@ -30,4 +30,12 @@ RSpec.describe "merchant discounts index page" do
     expect(page).to_not have_content(@discount_4.percentage_discount)
     expect(page).to_not have_content(@discount_4.quantity_threshold)
   end
+
+  it "discount ids link to that discount's show page" do
+    visit merchant_discounts_path(@merchant_1)
+
+    click_link "#{@discount_1.id}"
+
+    expect(current_path).to eq(merchant_discount_path(@merchant, @discount_1))
+  end
 end
