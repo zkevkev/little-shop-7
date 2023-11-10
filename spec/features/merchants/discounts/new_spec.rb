@@ -35,6 +35,6 @@ RSpec.describe "new merchant discount page" do
     click_button "Create Discount"
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
-    expect(page).to have_content("Error: percentage_discount can't be blank")
+    expect(page).to have_content("Error: Percentage discount can't be blank")
   end
 end
