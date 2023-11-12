@@ -39,6 +39,7 @@ RSpec.describe "merchant invoice show page" do
     @transaction_4 = create_list(:transaction, 2, invoice: @invoice_4, result: 0)
     @transaction_5 = create_list(:transaction, 1, invoice: @invoice_5, result: 0)
     @transaction_6 = create(:transaction, invoice: @invoice_6, result: 1)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 2)
   end
 
   #US 15
@@ -69,7 +70,6 @@ RSpec.describe "merchant invoice show page" do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
 
       expect(page).to have_content("Total revenue: $1,000.00")
-
     end
   end
 
@@ -84,6 +84,24 @@ RSpec.describe "merchant invoice show page" do
       end
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
+    end
+  end
+
+  describe "Total Revenue and Discounted Revenue" do
+    it "displays the total revenue for this merchant invoice" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      within("#total-revenue") do
+        expect(page).to have_content("$1,000.00")
+      end
+    end
+
+    it "displays the total revenue minus discounts for this merchant invoice" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      within("#discunted-total-revenue") do
+        expect(page).to have_content("$500.00")
+      end
     end
   end
 end

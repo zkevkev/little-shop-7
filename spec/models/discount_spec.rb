@@ -12,7 +12,7 @@ RSpec.describe Discount, type: :model do
 
   before :each do
     @merchant_1 = create(:merchant)
-    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 0.2, quantity_threshold: 10)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 20, quantity_threshold: 10)
   end
 
   describe "instance methods" do
