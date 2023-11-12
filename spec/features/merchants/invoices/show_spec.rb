@@ -39,6 +39,7 @@ RSpec.describe "merchant invoice show page" do
     @transaction_5 = create_list(:transaction, 1, invoice: @invoice_5, result: 0)
     @transaction_6 = create(:transaction, invoice: @invoice_6, result: 1)
     @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 2)
+    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 20)
   end
 
   #US 15
@@ -57,7 +58,7 @@ RSpec.describe "merchant invoice show page" do
   #US 16
   describe "Merchant Invoice Show Page: Invoice Item Information" do
     it "shows items on the invoice related to the merchent" do
-      visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
 
       expect(page).to have_content(@item_1.name)
       expect(page).to have_content(@invoice_item_1.quantity)
@@ -79,6 +80,23 @@ RSpec.describe "merchant invoice show page" do
       within("#discounted-total-revenue") do
         expect(page).to have_content("$500.00")
       end
+    end
+
+    it "has a link next to each item to the discount applied" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      within("#discount-#{@invoice_item_1.id}") do
+        expect(page).to have_link("#{@discount_1.id}")
+        expect(page).to_not have_link("#{@discount_2.id}")
+      end
+    end
+
+    it "discount applied link routes to dicount show page" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      click_link "#{@discount_1.id}"
+
+      expect(current_path).to eq(merchant_discount_path(@merchant_1, @discount_1))
     end
   end
 
