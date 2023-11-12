@@ -76,7 +76,7 @@ RSpec.describe "merchant invoice show page" do
     it "shows the total revenue minus discounts for this merchant invoice" do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
 
-      within("#discunted-total-revenue") do
+      within("#discounted-total-revenue") do
         expect(page).to have_content("$500.00")
       end
     end

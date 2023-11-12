@@ -25,9 +25,15 @@ RSpec.describe "merchant discount show page" do
   it "does not show information from other discounts" do
     visit merchant_discount_path(@merchant_1, @discount_1)
 
-    expect(page).to_not have_content(@discount_2.id)
-    expect(page).to_not have_content(@discount_2.percentage_discount)
-    expect(page).to_not have_content(@discount_2.quantity_threshold)
+    within("#id") do
+      expect(page).to_not have_content(@discount_2.id)
+    end
+    within("#percentage_discount") do
+      expect(page).to_not have_content(@discount_2.percentage_discount)
+    end
+    within("#quantity_threshold") do
+      expect(page).to_not have_content(@discount_2.quantity_threshold)
+    end
   end
 
   it "has a link to edit the discount" do

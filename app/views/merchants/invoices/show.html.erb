@@ -4,7 +4,15 @@
 <p>Status: <%= @invoice.status %></p>
 <p>Date Created: <%= @invoice.date_format %></p>
 <p id="total-revenue">Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
-<p id="discunted-total-revenue">Total Discounted Revenue: <%=  %></p>
+<p id="discounted-total-revenue">
+  Total Discounted Revenue: 
+  <% if @invoice.discounts.present? %>
+    <%= number_to_currency(@invoice.discounted_revenue / 100) %>
+  <% else %>
+    <%= number_to_currency(@invoice.total_revenue / 100) %>
+  <% end %>
+</p>
+
 <p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 <section id="item-status">
 <p>Items on the Invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>
