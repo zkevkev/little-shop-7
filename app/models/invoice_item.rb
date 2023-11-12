@@ -13,4 +13,10 @@ class InvoiceItem < ApplicationRecord
     .select('id', 'invoices.id as invoice_id', 'invoice_items.status', 'invoices.created_at')
     .order('invoices.created_at ASC')
   end
+
+  def discount_applied
+    discounts.where("discounts.quantity_threshold <= ?", quantity)
+    .order("discounts.percentage_discount DESC")
+    .first
+  end
 end
