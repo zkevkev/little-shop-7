@@ -47,5 +47,11 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice_1.calculate_discounts).to eq(250000)
       end
     end
+
+    describe "#discounted_revenue" do
+      it "calculates the revenue minus discounts" do
+        expect(@invoice_1.discounted_revenue).to eq(250000)
+      end
+    end
   end
 end
