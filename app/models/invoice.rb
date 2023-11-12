@@ -28,4 +28,8 @@ class Invoice < ApplicationRecord
     .values
     .first
   end
+
+  def discounted_revenue
+    self.total_revenue - self.calculate_discounts
+  end
 end
