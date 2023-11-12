@@ -4,7 +4,7 @@ RSpec.describe Invoice, type: :model do
   before :each do
     @date = DateTime.new(2012, 3, 10)
     @merchant_1 = create(:merchant)
-    @invoice1 = create(:invoice, created_at: @date)
+    @invoice_1 = create(:invoice, created_at: @date)
     @item_1 = create(:item, merchant: @merchant_1)
     @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, unit_price: 50_000, quantity: 10)
     @transaction_1 = create_list(:transaction, 5, invoice: @invoice_1, result: 0)
@@ -16,6 +16,8 @@ RSpec.describe Invoice, type: :model do
     it { should belong_to(:customer) }
     it { should have_many(:transactions) }
     it { should have_many(:items).through(:invoice_items) }
+    it { should have_many(:merchants).through(:items) }
+    it { should have_many(:discounts).through(:merchants) }
   end
 
   describe 'validations' do
@@ -25,7 +27,7 @@ RSpec.describe Invoice, type: :model do
   describe "instance methods" do
     describe "#date_format" do
       it "can return the created_at date formatted as 'day_of_week, full_month padded_day, year'" do
-        expect(@invoice1.date_format).to eq("Saturday, March 10, 2012")
+        expect(@invoice_1.date_format).to eq("Saturday, March 10, 2012")
       end
     end
 
@@ -33,10 +35,10 @@ RSpec.describe Invoice, type: :model do
       it "can find the total revenue on an invoice" do
         item1 = create(:item, unit_price: 100)
         item2 = create(:item, unit_price: 200)
-        create(:invoice_item, invoice: @invoice1, item: item1, quantity: 2, unit_price: 100)
-        create(:invoice_item, invoice: @invoice1, item: item2, quantity: 3, unit_price: 200)
+        create(:invoice_item, invoice: @invoice_1, item: item1, quantity: 2, unit_price: 100)
+        create(:invoice_item, invoice: @invoice_1, item: item2, quantity: 3, unit_price: 200)
 
-        expect(@invoice1.total_revenue).to eq(800)
+        expect(@invoice_1.total_revenue).to eq(500800)
       end
     end
 
