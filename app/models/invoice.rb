@@ -21,5 +21,11 @@ class Invoice < ApplicationRecord
   def calculate_discounts
     invoice_items
     .joins(:discounts)
+    .where("discounts.quantity_threshold <= invoice_items.quantity")
+    .group("invoice_items.id")
+    .select("invoice_items.*, MAX(discounts.percentage_discount) AS percentage_discount")
+    .sum("invoice_items.quantity * invoice_items.unit_price * percentage_discount / 100")
+    .values
+    .first
   end
 end
