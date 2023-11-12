@@ -2,19 +2,24 @@ require "rails_helper"
 
 RSpec.describe "Admin Invoices Index Page" do
   before :each do
+    @merchant_1 = create(:merchant)
     @customer = create(:customer)
     @invoice1 = create(:invoice, customer: @customer, status: 0)
     
     # Create first item and associated invoice item
-    @item1 = create(:item) 
-    @invoice_item1 = create(:invoice_item, invoice: @invoice1, item: @item1)
+    @item1 = create(:item, merchant: @merchant_1) 
+    @invoice_item1 = create(:invoice_item, invoice: @invoice1, item: @item1, unit_price: 50_000, quantity: 10)
     
     # Create second item and associated invoice item
-    @item2 = create(:item) 
-    @invoice_item2 = create(:invoice_item, invoice: @invoice1, item: @item2)
+    @item2 = create(:item, merchant: @merchant_1) 
+    @invoice_item2 = create(:invoice_item, invoice: @invoice1, item: @item2, unit_price: 50_000, quantity: 20)
 
     # Create a transaction for the invoice
     create(:transaction, invoice: @invoice1) 
+
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 25, quantity_threshold: 2)
+    @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 20)
+    @discount_3 = create(:discount, merchant: @merchant_1, percentage_discount: 75, quantity_threshold: 30)
   end
 
   # US 33
@@ -46,6 +51,12 @@ RSpec.describe "Admin Invoices Index Page" do
     visit admin_invoice_path(@invoice1.id)
 
     expect(page).to have_content("Total Revenue: $#{@invoice1.total_revenue}")
+  end
+
+  it "displays the total revenue minus discounts from the invoice" do
+    visit admin_invoice_path(@invoice1.id)
+
+    expect(page).to have_content("Total Discounted Revenue: $8,750.00")
   end
 
   # US 36
