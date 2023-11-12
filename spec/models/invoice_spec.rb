@@ -3,8 +3,14 @@ require "rails_helper"
 RSpec.describe Invoice, type: :model do
   before :each do
     @date = DateTime.new(2012, 3, 10)
-    @invoice1 = create(:invoice, created_at: @date) # automatically create associated customer, transactions and invoice_items
+    @merchant_1 = create(:merchant)
+    @invoice1 = create(:invoice, created_at: @date)
+    @item_1 = create(:item, merchant: @merchant_1)
+    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, unit_price: 50_000, quantity: 10)
+    @transaction_1 = create_list(:transaction, 5, invoice: @invoice_1, result: 0)
+    @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 10)
   end
+
   describe "relationships" do
     it { should have_many(:invoice_items) }
     it { should belong_to(:customer) }
@@ -31,6 +37,12 @@ RSpec.describe Invoice, type: :model do
         create(:invoice_item, invoice: @invoice1, item: item2, quantity: 3, unit_price: 200)
 
         expect(@invoice1.total_revenue).to eq(800)
+      end
+    end
+
+    describe "#calculate_discounts" do
+      it "calculates the total discount to be applied to an invoice" do
+        expect(@invoice_1.calculate_discounts).to eq(2500)
       end
     end
   end

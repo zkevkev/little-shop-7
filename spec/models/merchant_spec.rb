@@ -149,7 +149,6 @@ RSpec.describe Merchant, type: :model do
 
     describe "best_day" do
       it "returns a merchant's highest invoiced day" do
-
         expect(@merchant.best_day.strftime("%m/%d/%y")).to eq(@invoice_1.created_at.strftime("%m/%d/%y"))
       end
     end

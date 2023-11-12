@@ -4,7 +4,6 @@ RSpec.describe "merchant invoice show page" do
   before :each do
     @merchant_1 = create(:merchant)
     @merchant_2 = create(:merchant)
-    @invoice_1 = create(:invoice)
     @customer_1 = create(:customer)
     @customer_2 = create(:customer)
     @customer_3 = create(:customer)
@@ -89,7 +88,7 @@ RSpec.describe "merchant invoice show page" do
       visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
       
       
-      within("#item_status") do
+      within("#item-status") do
         click_button("Update Item Status")
       end
 
