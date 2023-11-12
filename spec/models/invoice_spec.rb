@@ -7,7 +7,6 @@ RSpec.describe Invoice, type: :model do
     @invoice_1 = create(:invoice, created_at: @date)
     @item_1 = create(:item, merchant: @merchant_1)
     @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, unit_price: 50_000, quantity: 10)
-    @transaction_1 = create_list(:transaction, 5, invoice: @invoice_1, result: 0)
     @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 10)
   end
 
