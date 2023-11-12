@@ -22,7 +22,7 @@ RSpec.describe "merchant dashboard index page" do
     @item_4 = create(:item, merchant: @merchant_1)
     @item_5 = create(:item, merchant: @merchant_1)
     @item_6 = create(:item, merchant: @merchant_1)
-    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1)
+    @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, quantity: 20)
     @invoice_item_2 = create(:invoice_item, invoice: @invoice_2, item: @item_2)
     @invoice_item_3 = create(:invoice_item, invoice: @invoice_3, item: @item_3)
     @invoice_item_4 = create(:invoice_item, invoice: @invoice_4, item: @item_4)
@@ -114,7 +114,7 @@ RSpec.describe "merchant dashboard index page" do
 
       click_link("#{@invoice_1.id}")
 
-      expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
+      expect(current_path).to eq(merchant_invoice_path(@merchant_1, @invoice_1))
     end
   end
 

@@ -30,6 +30,10 @@ class Invoice < ApplicationRecord
   end
 
   def discounted_revenue
-    self.total_revenue - self.calculate_discounts
+    if self.discounts.present?
+      self.total_revenue - self.calculate_discounts
+    else
+      self.total_revenue
+    end
   end
 end
