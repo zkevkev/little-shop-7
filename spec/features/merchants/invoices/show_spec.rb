@@ -66,10 +66,20 @@ RSpec.describe "merchant invoice show page" do
       expect(page).to_not have_content(@item_7.name)
     end
 
-    it "Shows total revenue generated for an invoice" do
+    it "shows total revenue generated for an invoice" do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
 
-      expect(page).to have_content("Total revenue: $1,000.00")
+      within("#total-revenue") do
+        expect(page).to have_content("$1,000.00")
+      end
+    end
+
+    it "shows the total revenue minus discounts for this merchant invoice" do
+      visit merchant_invoice_path(@merchant_1, @invoice_1)
+
+      within("#discunted-total-revenue") do
+        expect(page).to have_content("$500.00")
+      end
     end
   end
 
@@ -84,24 +94,6 @@ RSpec.describe "merchant invoice show page" do
       end
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")
-    end
-  end
-
-  describe "Total Revenue and Discounted Revenue" do
-    it "displays the total revenue for this merchant invoice" do
-      visit merchant_invoice_path(@merchant_1, @invoice_1)
-
-      within("#total-revenue") do
-        expect(page).to have_content("$1,000.00")
-      end
-    end
-
-    it "displays the total revenue minus discounts for this merchant invoice" do
-      visit merchant_invoice_path(@merchant_1, @invoice_1)
-
-      within("#discunted-total-revenue") do
-        expect(page).to have_content("$500.00")
-      end
     end
   end
 end
