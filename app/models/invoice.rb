@@ -27,6 +27,22 @@ class Invoice < ApplicationRecord
     .sum("invoice_items.quantity * invoice_items.unit_price * (100 - percentage_discount) / 100")
   end
 
+  # This returns odd negative values (broken)
+  # def discounted_revenue
+  #   total_revenue = self.total_revenue
+  #   if self.discounts.present?
+  #     discounts = self.calculate_discounts
+  #     discounted_revenue = total_revenue
+  #     discounts.each do |id, discount|
+  #       discounted_revenue -= discount
+  #     end
+  #     discounted_revenue
+  #   else
+  #     total_revenue
+  #   end
+  # end
+
+  # This works(?) but probably shouldn't/I'm not sure why it does
   def discounted_revenue
     total_revenue = self.total_revenue
     discounts = self.calculate_discounts.values
