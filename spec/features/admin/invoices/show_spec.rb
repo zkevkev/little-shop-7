@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Admin Invoices Index Page" do
+RSpec.describe "Admin Invoices Show Page" do
   before :each do
     @merchant_1 = create(:merchant)
     @customer = create(:customer)
@@ -55,7 +55,7 @@ RSpec.describe "Admin Invoices Index Page" do
 
   it "displays the total revenue minus discounts from the invoice" do
     visit admin_invoice_path(@invoice1.id)
-
+require 'pry'; binding.pry
     expect(page).to have_content("Total Discounted Revenue: $8,750.00")
   end
 

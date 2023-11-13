@@ -25,15 +25,16 @@ class Invoice < ApplicationRecord
     .group("invoice_items.id")
     .select("invoice_items.*, MAX(discounts.percentage_discount) AS percentage_discount")
     .sum("invoice_items.quantity * invoice_items.unit_price * percentage_discount / 100")
-    .values
-    .first
   end
 
   def discounted_revenue
+    total_revenue = self.total_revenue
     if self.discounts.present?
-      self.total_revenue - self.calculate_discounts
+      self.calculate_discounts.values.reduce do |total_revenue, discount|
+        total_revenue - discount
+      end
     else
-      self.total_revenue
+      total_revenue
     end
   end
 end

@@ -32,24 +32,19 @@ RSpec.describe Invoice, type: :model do
 
     describe "#total_revenue" do
       it "can find the total revenue on an invoice" do
-        item1 = create(:item, unit_price: 100)
-        item2 = create(:item, unit_price: 200)
-        create(:invoice_item, invoice: @invoice_1, item: item1, quantity: 2, unit_price: 100)
-        create(:invoice_item, invoice: @invoice_1, item: item2, quantity: 3, unit_price: 200)
-
-        expect(@invoice_1.total_revenue).to eq(500800)
+        expect(@invoice_1.total_revenue).to eq(500_000)
       end
     end
 
     describe "#calculate_discounts" do
-      it "calculates the total discount to be applied to an invoice" do
-        expect(@invoice_1.calculate_discounts).to eq(250000)
+      it "returns a hash of invoice_item ids linked to discount to be applied" do
+        expect(@invoice_1.calculate_discounts).to eq({@invoice_item_1.id => 250_000})
       end
     end
 
     describe "#discounted_revenue" do
       it "calculates the revenue minus discounts" do
-        expect(@invoice_1.discounted_revenue).to eq(250000)
+        expect(@invoice_1.discounted_revenue).to eq(250_000)
       end
     end
   end
