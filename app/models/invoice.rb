@@ -24,13 +24,14 @@ class Invoice < ApplicationRecord
     .where("discounts.quantity_threshold <= invoice_items.quantity")
     .group("invoice_items.id")
     .select("invoice_items.*, MAX(discounts.percentage_discount) AS percentage_discount")
-    .sum("invoice_items.quantity * invoice_items.unit_price * percentage_discount / 100")
+    .sum("invoice_items.quantity * invoice_items.unit_price * (100 - percentage_discount) / 100")
   end
 
   def discounted_revenue
     total_revenue = self.total_revenue
+    discounts = self.calculate_discounts.values
     if self.discounts.present?
-      self.calculate_discounts.values.reduce do |total_revenue, discount|
+      -discounted_revenue = discounts.reduce do |total_revenue, discount|
         total_revenue - discount
       end
     else
