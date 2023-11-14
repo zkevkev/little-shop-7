@@ -5,8 +5,10 @@ RSpec.describe Invoice, type: :model do
     @date = DateTime.new(2012, 3, 10)
     @merchant_1 = create(:merchant)
     @invoice_1 = create(:invoice, created_at: @date)
+    @invoice_2 = create(:invoice, created_at: @date)
     @item_1 = create(:item, merchant: @merchant_1)
     @invoice_item_1 = create(:invoice_item, invoice: @invoice_1, item: @item_1, unit_price: 50_000, quantity: 10)
+    @invoice_item_2 = create(:invoice_item, invoice: @invoice_2, item: @item_1, unit_price: 50_000, quantity: 5)
     @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 50, quantity_threshold: 10)
   end
 
@@ -45,6 +47,10 @@ RSpec.describe Invoice, type: :model do
     describe "#discounted_revenue" do
       it "calculates the revenue minus discounts" do
         expect(@invoice_1.discounted_revenue).to eq(250_000)
+      end
+
+      it "returns the total revenue if no discounts are available" do
+        expect(@invoice_2.discounted_revenue).to eq(@invoice_2.total_revenue)
       end
     end
   end

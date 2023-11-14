@@ -30,7 +30,7 @@ class Invoice < ApplicationRecord
   def discounted_revenue
     total_revenue = self.total_revenue
     discounts = self.calculate_discounts.values
-    if self.discounts.present?
+    if !discounts.empty?
       discounted_revenue = discounts.reduce do |total_revenue, discount|
         total_revenue - discount
       end
