@@ -109,8 +109,7 @@ RSpec.describe "merchant invoice show page" do
   describe "Merchant Invoice Show Page: Update Item Status" do
     it "select field and update button" do
       visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
-      
-      
+
       within("#the-status-#{@invoice_item_1.id}") do
         click_button("Update Invoice")
       end
