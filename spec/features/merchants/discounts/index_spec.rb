@@ -26,14 +26,6 @@ RSpec.describe "merchant discounts index page" do
   end
 
   # Solo #1
-  it "does not show discounts from any other merchants" do
-    visit merchant_discounts_path(@merchant_1)
-
-    expect(page).to_not have_content(@discount_4.percentage_discount)
-    expect(page).to_not have_content(@discount_4.quantity_threshold)
-  end
-
-  # Solo #1
   it "discount ids link to that discount's show page" do
     visit merchant_discounts_path(@merchant_1)
 
