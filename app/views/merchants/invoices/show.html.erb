@@ -12,10 +12,10 @@
   <p>Quantity Sold: <%= item.quantity %></p>
   <p>Price Sold: <%= number_to_currency(item.price_total) %>
   <p>
-    <% item.invoice_items.each do |invoice_item| %>
+    <% item.invoice_items.each_with_index do |invoice_item, index| %>
       <section id="discount-<%= invoice_item.id %>">
       <% if invoice_item.discount_applied != nil %>
-        Discount Applied: <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
+        Discount Applied: <%= index + 1 %>. <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
       <% end %>
       </section>
     <% end %>
