@@ -6,6 +6,7 @@ RSpec.describe "merchant discount edit page" do
     @discount_1 = create(:discount, merchant: @merchant_1, percentage_discount: 20, quantity_threshold: 10)
   end
 
+  # Solo #5
   it "has a form that is prepopulated with existing discount attributes" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
 
@@ -14,6 +15,7 @@ RSpec.describe "merchant discount edit page" do
     expect(page).to have_button("Update Discount")
   end
 
+  # Solo #5
   it "with valid data, updates the discount and redirects to merchant discount show page" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
 
@@ -28,6 +30,7 @@ RSpec.describe "merchant discount edit page" do
     expect(page).to have_content("Quantity Threshold: 1000")
   end
 
+  # Solo #5
   it "with invalid data, fashes an error and redirects back" do
     visit edit_merchant_discount_path(@merchant_1, @discount_1)
 

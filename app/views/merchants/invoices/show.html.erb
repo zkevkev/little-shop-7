@@ -11,6 +11,15 @@
   <p>Name: <%= item.name %></p>
   <p>Quantity Sold: <%= item.quantity %></p>
   <p>Price Sold: <%= number_to_currency(item.price_total) %>
+  <p>
+    <% item.invoice_items.each do |invoice_item| %>
+      <section id="discount-<%= invoice_item.id %>">
+      <% if invoice_item.discount_applied != nil %>
+        Discount Applied: <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
+      <% end %>
+      </section>
+    <% end %>
+  </p>
   <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
                 <% if item.status == "disabled" %>
                   <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>
@@ -30,13 +39,3 @@
              <% end %>
   <br>
 <%end%>
-
-<p>
-  <% @invoice.invoice_items.each do |invoice_item| %>
-    <section id="discount-<%= invoice_item.id %>">
-      <% if invoice_item.discount_applied != nil %>
-        Discount Applied: <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
-      <% end %>
-    </section>
-  <% end %>
-</p>

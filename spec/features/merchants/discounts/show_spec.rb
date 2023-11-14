@@ -7,6 +7,7 @@ RSpec.describe "merchant discount show page" do
     @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 30, quantity_threshold: 15)
   end
 
+  # Solo #4
   it "shows all information for the discount" do
     visit merchant_discount_path(@merchant_1, @discount_1)
     
@@ -22,6 +23,7 @@ RSpec.describe "merchant discount show page" do
     end
   end
 
+  # Solo #4
   it "does not show information from other discounts" do
     visit merchant_discount_path(@merchant_1, @discount_1)
 
@@ -36,6 +38,7 @@ RSpec.describe "merchant discount show page" do
     end
   end
 
+  # Solo #5
   it "has a link to edit the discount" do
     visit merchant_discount_path(@merchant_1, @discount_1)
 

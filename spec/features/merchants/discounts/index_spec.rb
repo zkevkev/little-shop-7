@@ -10,6 +10,7 @@ RSpec.describe "merchant discounts index page" do
     @discount_4 = create(:discount, merchant: @merchant_2, percentage_discount: 70, quantity_threshold: 50)
   end
 
+  # Solo #1
   it "shows all this merchant's discounts and their details" do
     visit merchant_discounts_path(@merchant_1)
 
@@ -24,6 +25,7 @@ RSpec.describe "merchant discounts index page" do
     end
   end
 
+  # Solo #1
   it "does not show discounts from any other merchants" do
     visit merchant_discounts_path(@merchant_1)
 
@@ -31,6 +33,7 @@ RSpec.describe "merchant discounts index page" do
     expect(page).to_not have_content(@discount_4.quantity_threshold)
   end
 
+  # Solo #1
   it "discount ids link to that discount's show page" do
     visit merchant_discounts_path(@merchant_1)
 
@@ -39,12 +42,14 @@ RSpec.describe "merchant discounts index page" do
     expect(current_path).to eq(merchant_discount_path(@merchant_1, @discount_1))
   end
 
+  # Solo #2
   it "has a link to create new discount" do
     visit merchant_discounts_path(@merchant_1)
 
     expect(page).to have_link("Create New Discount")
   end
 
+  # Solo #2
   it "link to create new discount links to new merchant discount page" do
     visit merchant_discounts_path(@merchant_1)
 
@@ -53,6 +58,7 @@ RSpec.describe "merchant discounts index page" do
     expect(current_path).to eq(new_merchant_discount_path(@merchant_1))
   end
 
+  # Solo #3
   it "delete button next to each discount deletes and routes back" do
     visit merchant_discounts_path(@merchant_1)
 

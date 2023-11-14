@@ -7,6 +7,7 @@ RSpec.describe "new merchant discount page" do
     @discount_2 = create(:discount, merchant: @merchant_1, percentage_discount: 0.3, quantity_threshold: 15)
   end
 
+  # Solo #2
   it "has a form to create a new discount for this merchant" do
     visit new_merchant_discount_path(@merchant_1)
 
@@ -15,6 +16,7 @@ RSpec.describe "new merchant discount page" do
     expect(page).to have_button("Create Discount")
   end
 
+  # Solo #2
   it "when filled out with valid data, it creates a new discount and redirects to index" do
     visit new_merchant_discount_path(@merchant_1)
 
@@ -27,6 +29,7 @@ RSpec.describe "new merchant discount page" do
     expect(page).to have_content("30")
   end
 
+  # Solo #2
   it "when filled out with invalid data, redirects back with an error" do
     visit new_merchant_discount_path(@merchant_1)
 

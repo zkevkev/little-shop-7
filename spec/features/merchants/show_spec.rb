@@ -46,6 +46,7 @@ RSpec.describe "merchant dashboard index page" do
     expect(page).to have_content(@merchant_1.name)
   end
 
+  # Solo #1
   it "has a link to this merchant's discount index" do
     visit merchant_dashboard_path(@merchant_1)
 
