@@ -96,7 +96,7 @@ RSpec.describe "merchant invoice show page" do
     # Solo #7
     it "discount applied link routes to dicount show page" do
       visit merchant_invoice_path(@merchant_1, @invoice_1)
-      
+
       within("#discount-#{@invoice_item_1.id}") do
         click_link "#{@discount_1.id}"
       end
@@ -111,8 +111,8 @@ RSpec.describe "merchant invoice show page" do
       visit"/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
       
       
-      within("#item-status") do
-        click_button("Update Item Status")
+      within("#the-status-#{@invoice_item_1.id}") do
+        click_button("Update Invoice")
       end
 
       expect(current_path).to eq("/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}")

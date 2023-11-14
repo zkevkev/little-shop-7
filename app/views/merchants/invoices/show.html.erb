@@ -1,41 +1,59 @@
-<h3>Merchant Invoices show</h3>
+<body>
+  <div class="row">
+    <p class='col-12'>Invoice #<%= @invoice.id %></p>
+  </div>
 
-<p>Invoice ID: <%= @invoice.id %></p>
-<p>Status: <%= @invoice.status %></p>
-<p>Date Created: <%= @invoice.date_format %></p>
-<p id="total-revenue">Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
-<p id="discounted-total-revenue">Total Discounted Revenue: <%= number_to_currency(@invoice.discounted_revenue / 100) %></p>
-<p>Customer: <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
-<section id="item-status">
-  <p>Items on the Invoice: <% @merchant.merchant_items(@merchant.id).each do |item|%></p>
-  <p>Name: <%= item.name %></p>
-  <p>Quantity Sold: <%= item.quantity %></p>
-  <p>Price Sold: <%= number_to_currency(item.price_total) %>
-  <p>
-    <% item.invoice_items.each_with_index do |invoice_item, index| %>
-      <section id="discount-<%= invoice_item.id %>">
-      <% if invoice_item.discount_applied != nil %>
-        Discount Applied: <%= index + 1 %>. <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
-      <% end %>
-      </section>
-    <% end %>
-  </p>
-  <p>Status Form:  <%= form_with(url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}", method: :patch, local: true) do |form| %>
-                <% if item.status == "disabled" %>
-                  <%= form.select :status, ["Enabled", "Disabled"], selected: "Disabled"%>
-                <% elsif item.status == "enabled"%>
-                  <%= form.select :status, ["Enabled", "Disabled"], selected: "Enabled"%>
-                <% end %>
-              <%= form.hidden_field :item_id, value: item.id%>
-              <%= form.submit "Update Item Status"%>
-              <% end %>
-</section>
-  <p>Status: <% if item.shipping_status == 2 %>
-                Shipped</P>
-              <% elsif item.shipping_status == 1%>
-                Packaged</p>
-                <% else %>
-                Pending</p>
-             <% end %>
+  <div id="current-invoice-status">
+    <strong>Status: </strong><%= @invoice.status %>
+  </div>
   <br>
-<%end%>
+
+  <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
+  <p id="total-revenue">Total Revenue: <%= number_to_currency(@invoice.total_revenue / 100) %></p>
+  <p id="discounted-total-revenue">Discounted Total Revenue: <%= number_to_currency(@invoice.discounted_revenue / 100) %>
+
+  <h4>Customer:</h4>
+    <%= @customer.first_name %> <%= @customer.last_name %><br>
+  <br>
+  <br>
+  <h4>Items on this Invoice:</h4>
+  <table class="table">
+    <thead>
+      <tr class="tr">
+        <th class="th1">Item Name</th>
+        <th class="th1">Quantity</th>
+        <th class="th1">Unit Price</th>
+        <th class="th1">Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @invoice.invoice_items.each do |i| %>
+        <section id="the-status-<%= i.id %>">
+          <tr class="tr">
+            <td style="text-align:center"><%= i.item.name %></td>
+            <td style="text-align:center"><%= i.quantity %></td>
+            <td style="text-align:center">$<%= i.unit_price %></td>
+            <td style="text-align:center">
+              <%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
+                <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
+                <%= f.submit 'Update Invoice' %>
+              <% end %>
+              </td>
+          </tr>
+        </section>
+      <% end %>
+    </tbody>
+  </table>
+
+</body>
+
+<p>
+  <% @invoice.invoice_items.each do |invoice_item| %>
+    <section id="discount-<%= invoice_item.id %>">
+      <% if invoice_item.discount_applied != nil %>
+        Discount Applied: <%= link_to "#{invoice_item.discount_applied.id}", merchant_discount_path(@merchant, invoice_item.discount_applied) %>
+      <% end %>
+    </section>
+  <% end %>
+</p>

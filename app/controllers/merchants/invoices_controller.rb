@@ -6,17 +6,20 @@ class Merchants::InvoicesController < ApplicationController
   def show
     @invoice = Invoice.find(params[:id])
     @merchant = Merchant.find(params[:merchant_id])
-    # require'pry';binding.pry
+    @customer = @invoice.customer
   end
-  def update
-    @item = Item.find(params[:item_id])
-    
-    if params[:status] == "Enabled"
-      @item.update(status: 0)
-    elsif params[:status] == "Disabled"
-      @item.update(status: 1)
-    end
 
-    redirect_to "/merchants/#{params[:merchant_id]}/invoices/#{params[:id]}"
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @invoice = Invoice.find(params[:id])
+    @invoice.update(invoice_params)
+    
+    redirect_to merchant_invoice_path(@merchant, @invoice)
+  end
+
+  private
+  
+  def invoice_params
+    params.require(:invoice).permit(:status)
   end
 end
