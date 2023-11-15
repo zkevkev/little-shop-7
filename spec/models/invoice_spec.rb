@@ -39,8 +39,8 @@ RSpec.describe Invoice, type: :model do
     end
 
     describe "#calculate_discounts" do
-      it "returns a hash of invoice_item ids linked to discount to be applied" do
-        expect(@invoice_1.calculate_discounts).to eq({@invoice_item_1.id => 250_000})
+      it "returns total discount to be applied" do
+        expect(@invoice_1.calculate_discounts).to eq(250_000)
       end
     end
 
